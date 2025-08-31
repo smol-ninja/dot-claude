@@ -1,0 +1,11 @@
+# directories
+backups/
+ide/
+logs/
+projects/
+shell-snapshots/
+statsig/
+todos/
+
+# files
+.claude.json

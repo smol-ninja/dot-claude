@@ -1,0 +1,8 @@
+{
+  "files.associations": {
+    ".claude.json": "plaintext"
+  },
+  "search.exclude": {
+    "shell-snapshots/**/*": true
+  }
+}

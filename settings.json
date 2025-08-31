@@ -1,0 +1,105 @@
+{
+  "includeCoAuthoredBy": false,
+  "model": "opusplan",
+  "env": {
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "0"
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude-code-docs/claude-docs-helper.sh hook-check"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/UserPromptSubmit/append-default.py"
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/UserPromptSubmit/append-explain.py"
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/UserPromptSubmit/append-ultrathink.py"
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(cat:*)",
+      "Bash(cd:*)",
+      "Bash(cp:*)",
+      "Bash(curl:*)",
+      "Bash(eza:*)",
+      "Bash(find:*)",
+      "Bash(gh:*)",
+      "Bash(git:*)",
+      "Bash(grep:*)",
+      "Bash(just:*)",
+      "Bash(ls:*)",
+      "Bash(mkdir:*)",
+      "Bash(na:*)",
+      "Bash(ni:*)",
+      "Bash(nlx:*)",
+      "Bash(node:*)",
+      "Bash(nr:*)",
+      "Bash(nun:*)",
+      "Bash(rg:*)",
+      "Bash(timeout:*)",
+      "Bash(touch:*)",
+      "Glob",
+      "Grep",
+      "LS",
+      "Read",
+      "Task",
+      "TodoWrite",
+      "WebFetch",
+      "WebSearch",
+      "mcp__context7",
+      "mcp__filesystem",
+      "mcp__github",
+      "mcp__magic",
+      "mcp__playwright",
+      "mcp__sequential-thinking",
+      "mcp__serena"
+    ],
+    "deny": [
+      "Bash(> /etc/*)",
+      "Bash(chmod -R:*)",
+      "Bash(chown -R:*)",
+      "Bash(dd:*)",
+      "Bash(doas:*)",
+      "Bash(kill -9:*)",
+      "Bash(killall:*)",
+      "Bash(launchctl:*)",
+      "Bash(mkfs:*)",
+      "Bash(passwd:*)",
+      "Bash(reboot:*)",
+      "Bash(rm -rf ~)",
+      "Bash(rm -rf ~/)",
+      "Bash(rm -rf ~/*)",
+      "Bash(shutdown:*)",
+      "Bash(su:*)",
+      "Bash(sudo:*)",
+      "Bash(systemctl:*)",
+      "Bash(userdel:*)",
+      "Bash(usermod:*)"
+    ]
+  },
+  "statusLine": {
+    "command": "bunx -y ccstatusline@latest",
+    "padding": 0,
+    "type": "command"
+  }
+}
