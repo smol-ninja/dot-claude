@@ -48,6 +48,7 @@
       "Bash(grep:*)",
       "Bash(just:*)",
       "Bash(ls:*)",
+      "Bash(jq:*)",
       "Bash(mkdir:*)",
       "Bash(na:*)",
       "Bash(ni:*)",
