@@ -1,6 +1,11 @@
-# Update Changelog
+# Bump Release
 
-Update the `CHANGELOG.md` file with all changes since the last version release.
+1. Update the `CHANGELOG.md` file with all changes since the last version release.
+2. Bump the version in `package.json`
+3. Commit the changes with a message like "docs: release <version>"
+4. Create a new git tag by running `git tag -a v<version> -m "<version>"`
+
+## Tasks
 
 ## Process
 
@@ -14,7 +19,7 @@ Update the `CHANGELOG.md` file with all changes since the last version release.
 
 ## Output
 
-Generate changelog entries categorizing changes in this order:
+In the `CHANGELOG.md` file, generate changelog entries categorizing changes in this order:
 
 - **Changed** - Changes in existing functionality
 - **Added** - New functionality
@@ -26,3 +31,4 @@ Generate changelog entries categorizing changes in this order:
 - **Production changes only** - Exclude test changes, CI/CD workflows, and development tooling
 - **Reference pull requests** - Link to PRs when available for context
 - **Net changes only** - Skip commits that revert changes made after the last release
+- **Only dependencies and peerDependencies changes** - Exclude changes to devDependencies
