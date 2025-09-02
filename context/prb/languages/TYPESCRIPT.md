@@ -1,6 +1,6 @@
 # TypeScript
 
-A collection of TypeScript-specific rules.
+A collection of TypeScript rules.
 
 - These instructions also apply to JavaScript.
 - These are not hard-and-fast rules. If you have a good reason not to apply a rule, do so.

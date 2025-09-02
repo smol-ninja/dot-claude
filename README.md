@@ -1,10 +1,44 @@
 # Claude Code config
 
-The `.claude` directory used by PRB.
+PRB's `.claude` directory.
 
 ## Stack
 
+- **[SuperClaude Framework](https://github.com/SuperClaude-Org/SuperClaude_Framework)**: Enhancing Claude Code with
+  specialized commands, cognitive personas, and development methodologies
+- **[claude-code-docs](https://github.com/ericbuess/claude-code-docs)**: Local mirror of Claude Code documentation from
+  Anthropic
+
+### Commands
+
 TODO
+
+### Context
+
+TODO
+
+### MCP Servers
+
+- [ContainerUse](https://container-use.com): Sandboxed development environment
+- [Context7](https://github.com/oraios/context7): Curated documentation lookup and pattern guidance
+- [Serena](https://github.com/oraios/serena): Semantic code understanding with project memory and session persistence
+- [Magic](https://github.com/oraios/magic): Modern UI generation from [21st.dev](https://21st.dev) patterns
+- [Morphllm](https://github.com/oraios/morphllm): Optimized pattern-based code editing engine transformations
+- [Playwright](https://github.com/oraios/playwright): Real browser automation and testing
+- [Sequential](https://github.com/oraios/sequential): Structured multi-step reasoning and hypothesis testing
+
+### Nice to Have
+
+Some nice-to-have utilities:
+
+- **[ccnotify](https://github.com/dazuiba/CCNotify)**: Custom notifications for Claude Code
+- **[ccstatusline](https://github.com/sirmalloc/ccstatusline)**: Custom status line for Claude Code
+
+## Inspiration
+
+- [ClaudeLog](https://claudelog.com)
+- Seth Hobson's [agents](https://github.com/wshobson/agents) and [commands](https://github.com/wshobson/commands)
+- Will Cygan's [dotfiles](https://github.com/wcygan/dotfiles), especially his slash command megalist
 
 ## License
 

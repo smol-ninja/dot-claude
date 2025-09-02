@@ -37,25 +37,6 @@ alias pw := prettier-write
 #                                    AGENTS                                    #
 # ---------------------------------------------------------------------------- #
 
-
-# See https://github.com/contains-studio/agents/pull/9
-sync-agents-contains-studio:
-    #!/usr/bin/env sh
-    rm -rf ./agents
-    git clone https://github.com/ericdum/agents agents-repo
-    cd ./agents-repo
-    rm -rf .git .gitignore README.md
-    cd ..
-    rsync --archive --recursive ./agents-repo/ ./agents/
-    rm -rf ./agents-repo
-
-sync-agents-lst97:
-    #!/usr/bin/env sh
-    rm -rf ./agents
-    git clone https://github.com/lst97/claude-code-sub-agents agents-repo
-    rsync --archive --recursive ./agents-repo/agents/ ./agents/
-    rm -rf ./agents-repo
-
 sync-agents-wshobson:
     #!/usr/bin/env sh
     rm -rf ./agents

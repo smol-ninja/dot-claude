@@ -6,7 +6,6 @@
 
 - UI component requests: button, form, modal, card, table, nav
 - Design system implementation needs
-- `/ui` or `/21` commands
 - Frontend-specific keywords: responsive, accessible, interactive
 - Component enhancement or refinement requests
 

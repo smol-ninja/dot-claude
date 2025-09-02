@@ -42,18 +42,6 @@
           {
             "type": "command",
             "command": "~/.claude/hooks/ccnotify/ccnotify.py UserPromptSubmit"
-          },
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/UserPromptSubmit/append-default.py"
-          },
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/UserPromptSubmit/append-explain.py"
-          },
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/UserPromptSubmit/append-ultrathink.py"
           }
         ]
       }
