@@ -11,7 +11,7 @@ import sqlite3
 import subprocess
 import logging
 from logging.handlers import TimedRotatingFileHandler
-from datetime import datetime, timezone
+from datetime import datetime
 
 
 class ClaudePromptTracker:

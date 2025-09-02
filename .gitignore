@@ -10,3 +10,7 @@ todos/
 
 # files
 .claude.json
+
+# specific
+hooks/ccnotify/ccnotify.db
+hooks/ccnotify/*.log*

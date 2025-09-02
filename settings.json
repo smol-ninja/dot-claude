@@ -5,6 +5,16 @@
     "CLAUDE_CODE_ENABLE_TELEMETRY": "0"
   },
   "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/ccnotify/ccnotify.py Notification"
+          }
+        ]
+      }
+    ],
     "PreToolUse": [
       {
         "matcher": "Read",
@@ -16,9 +26,23 @@
         ]
       }
     ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/ccnotify/ccnotify.py Stop"
+          }
+        ]
+      }
+    ],
     "UserPromptSubmit": [
       {
         "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/ccnotify/ccnotify.py UserPromptSubmit"
+          },
           {
             "type": "command",
             "command": "~/.claude/hooks/UserPromptSubmit/append-default.py"
@@ -37,6 +61,7 @@
   },
   "permissions": {
     "allow": [
+      "Bash(bun:*)",
       "Bash(cat:*)",
       "Bash(cd:*)",
       "Bash(cp:*)",
@@ -54,13 +79,17 @@
       "Bash(na:*)",
       "Bash(ni:*)",
       "Bash(nlx:*)",
+      "Bash(npm:*)",
+      "Bash(nlx:*)",
       "Bash(node:*)",
       "Bash(nr:*)",
       "Bash(nun:*)",
+      "Bash(pnpm:*)",
       "Bash(rg:*)",
       "Bash(tail:*)",
       "Bash(timeout:*)",
       "Bash(touch:*)",
+      "Bash(yarn:*)",
       "Glob",
       "Grep",
       "LS",
@@ -73,9 +102,11 @@
       "mcp__filesystem",
       "mcp__github",
       "mcp__magic",
+      "mcp__container-use",
       "mcp__playwright",
       "mcp__sequential-thinking",
-      "mcp__serena"
+      "mcp__serena",
+      "mcp__solana-mcp-server"
     ],
     "deny": [
       "Bash(> /etc/*)",
