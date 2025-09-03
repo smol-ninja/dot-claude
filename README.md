@@ -2,20 +2,17 @@
 
 PRB's `.claude` directory.
 
-## Stack
-
-- **[SuperClaude Framework](https://github.com/SuperClaude-Org/SuperClaude_Framework)**: Enhancing Claude Code with
-  specialized commands, cognitive personas, and development methodologies
-- **[claude-code-docs](https://github.com/ericbuess/claude-code-docs)**: Local mirror of Claude Code documentation from
-  Anthropic
-
-### Commands
+## Context
 
 TODO
 
-### Context
+## Commands
 
 TODO
+
+## Frameworks
+
+TODO: explain
 
 ### MCP Servers
 
@@ -33,12 +30,8 @@ Some nice-to-have utilities:
 
 - **[ccnotify](https://github.com/dazuiba/CCNotify)**: Custom notifications for Claude Code
 - **[ccstatusline](https://github.com/sirmalloc/ccstatusline)**: Custom status line for Claude Code
-
-## Inspiration
-
-- [ClaudeLog](https://claudelog.com)
-- Seth Hobson's [agents](https://github.com/wshobson/agents) and [commands](https://github.com/wshobson/commands)
-- Will Cygan's [dotfiles](https://github.com/wcygan/dotfiles), especially his slash command megalist
+- **[claude-code-docs](https://github.com/ericbuess/claude-code-docs)**: Local mirror of Claude Code documentation from
+  Anthropic
 
 ## License
 

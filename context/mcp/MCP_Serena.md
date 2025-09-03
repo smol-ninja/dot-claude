@@ -1,8 +1,8 @@
-# Serena MCP Server
+### Serena
 
 **Purpose**: Semantic code understanding with project memory and session persistence
 
-## Triggers
+#### Triggers
 
 - Symbol operations: rename, extract, move functions/classes
 - Project-wide code navigation and exploration
@@ -11,7 +11,7 @@
 - Memory-driven development workflows
 - Large codebase analysis (>50 files, complex architecture)
 
-## Choose When
+#### Choose When
 
 - **Over Morphllm**: For symbol operations, not pattern-based edits
 - **For semantic understanding**: Symbol references, dependency tracking, LSP integration
@@ -19,12 +19,12 @@
 - **For large projects**: Multi-language codebases requiring architectural understanding
 - **Not for simple edits**: Basic text replacements, style enforcement, bulk operations
 
-## Works Best With
+#### Works Best With
 
 - **Morphllm**: Serena analyzes semantic context → Morphllm executes precise edits
 - **Sequential**: Serena provides project context → Sequential performs architectural analysis
 
-## Examples
+#### Examples
 
 ```
 "rename getUserData function everywhere" → Serena (symbol operation with dependency tracking)

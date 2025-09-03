@@ -1,8 +1,8 @@
-# Sequential MCP Server
+### Sequential
 
 **Purpose**: Multi-step reasoning engine for complex analysis and systematic problem solving
 
-## Triggers
+#### Triggers
 
 - Complex debugging scenarios with multiple layers
 - Architectural analysis and system design questions
@@ -11,7 +11,7 @@
 - Multi-component failure investigation
 - Performance bottleneck identification requiring methodical approach
 
-## Choose When
+#### Choose When
 
 - **Over native reasoning**: When problems have 3+ interconnected components
 - **For systematic analysis**: Root cause analysis, architecture review, security assessment
@@ -19,13 +19,13 @@
 - **For cross-domain issues**: Problems spanning frontend, backend, database, infrastructure
 - **Not for simple tasks**: Basic explanations, single-file changes, straightforward fixes
 
-## Works Best With
+#### Works Best With
 
 - **Context7**: Sequential coordinates analysis → Context7 provides official patterns
 - **Magic**: Sequential analyzes UI logic → Magic implements structured components
 - **Playwright**: Sequential identifies testing strategy → Playwright executes validation
 
-## Examples
+#### Examples
 
 ```
 "why is this API slow?" → Sequential (systematic performance analysis)

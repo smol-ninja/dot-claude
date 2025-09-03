@@ -1,11 +1,19 @@
-# PRB
+# Base Instructions
 
-@context/prb/PRB.md
+@context/BASE.md
+
+# Languages
+
+@context/languages/LANGUAGES.md
 
 # MCP Documentation
 
 @context/mcp/MCP.md
 
-# SuperClaude
+# Tools
 
-@context/sc/SUPERCLAUDE.md
+@context/tools/TOOLS.md
+
+# Framework
+
+@FRAMEWORK.md

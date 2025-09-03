@@ -3,6 +3,12 @@
     ".claude.json": "plaintext"
   },
   "search.exclude": {
-    "shell-snapshots/**/*": true
+    "backups/**/*": true,
+    "ide/**/*": true,
+    "logs/**/*": true,
+    "projects/**/*": true,
+    "shell-snapshots/**/*": true,
+    "statsig/**/*": true,
+    "todos/**/*": true
   }
 }

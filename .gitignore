@@ -1,5 +1,4 @@
-# directories
-agents-repo/
+# misc directories
 backups/
 ide/
 logs/
@@ -8,9 +7,9 @@ shell-snapshots/
 statsig/
 todos/
 
-# files
+# misc files
 .claude.json
 
-# specific
+# hooks
 hooks/ccnotify/ccnotify.db
 hooks/ccnotify/*.log*

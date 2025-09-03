@@ -1,8 +1,8 @@
-# Morphllm MCP Server
+### Morphllm
 
 **Purpose**: Pattern-based code editing engine with token optimization for bulk transformations
 
-## Triggers
+#### Triggers
 
 - Multi-file edit operations requiring consistent patterns
 - Framework updates, style guide enforcement, code cleanup
@@ -10,7 +10,7 @@
 - Natural language edit instructions with specific scope
 - Token optimization needed (efficiency gains 30-50%)
 
-## Choose When
+#### Choose When
 
 - **Over Serena**: For pattern-based edits, not symbol operations
 - **For bulk operations**: Style enforcement, framework updates, text replacements
@@ -18,12 +18,12 @@
 - **For simple to moderate complexity**: <10 files, straightforward transformations
 - **Not for semantic operations**: Symbol renames, dependency tracking, LSP integration
 
-## Works Best With
+#### Works Best With
 
 - **Serena**: Serena analyzes semantic context → Morphllm executes precise edits
 - **Sequential**: Sequential plans edit strategy → Morphllm applies systematic changes
 
-## Examples
+#### Examples
 
 ```
 "update all React class components to hooks" → Morphllm (pattern transformation)

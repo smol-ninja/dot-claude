@@ -1,15 +1,15 @@
-# Magic MCP Server
+### Magic MCP Server
 
 **Purpose**: Modern UI component generation from 21st.dev patterns with design system integration
 
-## Triggers
+#### Triggers
 
 - UI component requests: button, form, modal, card, table, nav
 - Design system implementation needs
 - Frontend-specific keywords: responsive, accessible, interactive
 - Component enhancement or refinement requests
 
-## Choose When
+#### Choose When
 
 - **For UI components**: Use Magic, not native HTML/CSS generation
 - **Over manual coding**: When you need production-ready, accessible components
@@ -17,12 +17,12 @@
 - **For modern frameworks**: React, Vue, Angular with current best practices
 - **Not for backend**: API logic, database queries, server configuration
 
-## Works Best With
+#### Works Best With
 
 - **Context7**: Magic uses 21st.dev patterns → Context7 provides framework integration
 - **Sequential**: Sequential analyzes UI requirements → Magic implements structured components
 
-## Examples
+#### Examples
 
 ```
 "create a login form" → Magic (UI component generation)
