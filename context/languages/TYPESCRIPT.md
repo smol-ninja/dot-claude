@@ -41,6 +41,10 @@ present, create it.
 
 Exception: project already uses ESLint and Prettier.
 
+#### No `any` type
+
+Never use the `any` type.
+
 #### Prefer TypeScript over JavaScript
 
 Use TypeScript for all new code.

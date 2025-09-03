@@ -48,7 +48,9 @@
     ]
   },
   "permissions": {
+    "defaultMode": "plan",
     "allow": [
+      "Bash(~/.claude-code-docs/claude-docs-helper.sh:*)",
       "Bash(bun:*)",
       "Bash(cargo:*)",
       "Bash(cat:*)",
@@ -120,7 +122,9 @@
       "Bash(sudo:*)",
       "Bash(systemctl:*)",
       "Bash(userdel:*)",
-      "Bash(usermod:*)"
+      "Bash(usermod:*)",
+      "Read(./.env)",
+      "Read(./.env.production)"
     ]
   },
   "statusLine": {
