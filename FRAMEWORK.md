@@ -1,0 +1,1 @@
+/Users/prb/.claude/frameworks/sc/CLAUDE.md

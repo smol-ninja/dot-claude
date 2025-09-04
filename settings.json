@@ -61,6 +61,7 @@
       "Bash(cd:*)",
       "Bash(cp:*)",
       "Bash(curl:*)",
+      "Bash(echo:*)",
       "Bash(eza:*)",
       "Bash(find:*)",
       "Bash(gdate:*)",

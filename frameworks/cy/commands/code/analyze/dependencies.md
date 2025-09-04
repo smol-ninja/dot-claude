@@ -1,5 +1,5 @@
 ---
-allowed-tools: Bash(fd:*), Bash(rg:*), Bash(npm:*), Bash(cargo:*), Bash(go:*), Bash(jq:*), Read
+allowed-tools: Bash(fd:*), Bash(rg:*), Bash(npm:*), Bash(cargo:*), Bash(go:*), Bash(head:*), Bash(xargs:*), Bash(jq:*), Bash(echo:*), Read, Bash(head -5 | xargs -I {} basename {} 2>/dev/null || echo "none detected")
 description: Analyze project dependencies and their relationships
 ---
 
