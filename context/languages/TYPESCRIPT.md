@@ -41,6 +41,19 @@ present, create it.
 
 Exception: project already uses ESLint and Prettier.
 
+#### Dayjs for Date calculations
+
+Use the `dayjs` library for date calculations. Avoid using the native JavaScript Date object.
+
+Example:
+
+```typescript
+import dayjs from "dayjs";
+
+const now = dayjs();
+const tomorrow = now.add(1, "day");
+```
+
 #### No `any` type
 
 Never use the `any` type.

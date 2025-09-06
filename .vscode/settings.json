@@ -10,5 +10,8 @@
     "shell-snapshots/**/*": true,
     "statsig/**/*": true,
     "todos/**/*": true
+  },
+  "[json][jsonc][md][yaml][yml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }

@@ -1,7 +1,22 @@
+---
+allowed-tools: Bash(eza:*), Bash(git:*), Edit, LS, Read, Write
+description: Rolls out a new release by updating changelog, bumping version, committing, and tagging
+---
+
 # Bump Release
 
+Support for both regular and beta releases.
+
+## Parameters
+
+- `--beta`: Create a beta release with `-beta.X` suffix
+
+## Steps
+
 1. Update the `CHANGELOG.md` file with all changes since the last version release.
-2. Bump the version in `package.json`
+2. Bump the version in `package.json`:
+   - **Regular release**: Follow semantic versioning (e.g., 1.2.3)
+   - **Beta release**: Add `-beta.X` suffix (e.g., 1.2.3-beta.1)
 3. Commit the changes with a message like "docs: release <version>"
 4. Create a new git tag by running `git tag -a v<version> -m "<version>"`
 
@@ -9,13 +24,31 @@
 
 ## Process
 
-1. **Review git history** - Examine commits since the last tagged release
-2. **Follow format** - Use [Common Changelog](https://common-changelog.org/) specification
-3. **Check version** - Get current version from `package.json`
-4. **Bump version** - If unchanged since last release, increment per [Semantic Versioning](https://semver.org/) rules:
-   - **PATCH** (x.x.X) - Bug fixes, documentation updates
-   - **MINOR** (x.X.x) - New features, backward-compatible changes
-   - **MAJOR** (X.x.x) - Breaking changes
+1. **Check for beta flag** - Determine if this is a beta release (`--beta` parameter)
+2. **Review git history** - Examine commits since the last tagged release
+3. **Follow format** - Use [Common Changelog](https://common-changelog.org/) specification
+4. **Check version** - Get current version from `package.json`
+5. **Bump version** - If unchanged since last release, increment per Semantic Versioning rules:
+   - **For regular releases**:
+     - **PATCH** (x.x.X) - Bug fixes, documentation updates
+     - **MINOR** (x.X.x) - New features, backward-compatible changes
+     - **MAJOR** (X.x.x) - Breaking changes
+   - **For beta releases** (`--beta` flag):
+     - If current version has no beta suffix: Add `-beta.1` to the version
+     - If current version already has beta suffix: Increment beta number (e.g., `-beta.1` → `-beta.2`)
+     - If moving from beta to release: Remove beta suffix and use the base version
+
+## Beta Release Logic
+
+When `--beta` flag is provided in the $ARGUMENTS
+
+1. **Parse current version** from `package.json`
+2. **Determine beta version**:
+   - If current version is `1.2.3`: Create `1.2.4-beta.1` (increment patch + beta.1)
+   - If current version is `1.2.3-beta.1`: Create `1.2.3-beta.2` (increment beta number)
+   - If current version is `1.2.3-beta.5`: Create `1.2.3-beta.6` (increment beta number)
+3. **Update changelog** with beta release notes
+4. **Commit and tag** with beta version (e.g., `v1.2.4-beta.1`)
 
 ## Output
 
@@ -32,3 +65,29 @@ In the `CHANGELOG.md` file, generate changelog entries categorizing changes in t
 - **Reference pull requests** - Link to PRs when available for context
 - **Net changes only** - Skip commits that revert changes made after the last release
 - **Only dependencies and peerDependencies changes** - Exclude changes to devDependencies
+- **Beta considerations** - For beta releases, include experimental features and breaking changes that are being tested
+
+## Examples
+
+### Regular Release
+
+```bash
+# Create a regular patch/minor/major release
+/prb:bump-release
+```
+
+### Beta Release
+
+```bash
+# Create a beta release with -beta.X suffix
+/prb:bump-release --beta
+```
+
+## Version Examples
+
+| Current Version | Release Type | New Version     |
+| --------------- | ------------ | --------------- |
+| `1.2.3`         | Regular      | `1.2.4` (patch) |
+| `1.2.3`         | Beta         | `1.2.4-beta.1`  |
+| `1.2.3-beta.1`  | Beta         | `1.2.3-beta.2`  |
+| `1.2.3-beta.5`  | Regular      | `1.2.3`         |

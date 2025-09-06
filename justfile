@@ -32,13 +32,13 @@ default:
 # Check Prettier formatting
 [group("lint")]
 prettier-check:
-    nlx prettier --check "**/*.{md,yaml,yml}"
+    nlx prettier --check "**/*.{json,jsonc,md,yaml,yml}"
 alias pc := prettier-check
 
 # Format using Prettier
 [group("lint")]
 prettier-write:
-    nlx prettier --write "**/*.{md,yaml,yml}"
+    nlx prettier --write "**/*.{json,jsonc,md,yaml,yml}"
 alias pw := prettier-write
 
 # ---------------------------------------------------------------------------- #
