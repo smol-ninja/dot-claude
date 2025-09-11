@@ -56,6 +56,17 @@ const tomorrow = now.add(1, "day");
 
 #### No `any` type
 
+#### No double negation (`!!`)
+
+Never use the double negation (`!!`) operator. Instead, use the `Boolean` constructor.
+
+Example:
+
+```typescript
+const x = !!y; // bad
+const x = Boolean(y); // good
+```
+
 Never use the `any` type.
 
 #### Prefer TypeScript over JavaScript

@@ -31,10 +31,6 @@
         "hooks": [
           {
             "type": "command",
-            "command": "claudekit-hooks run create-checkpoint"
-          },
-          {
-            "type": "command",
             "command": "~/.claude/hooks/ccnotify/ccnotify.py Stop"
           }
         ]
@@ -55,6 +51,7 @@
     "defaultMode": "plan",
     "allow": [
       "Bash(~/.claude-code-docs/claude-docs-helper.sh:*)",
+      "Bash(awk:*)",
       "Bash(bun:*)",
       "Bash(cargo:*)",
       "Bash(cat:*)",
@@ -64,6 +61,7 @@
       "Bash(echo:*)",
       "Bash(eza:*)",
       "Bash(find:*)",
+      "Bash(forge:*)",
       "Bash(gdate:*)",
       "Bash(gh:*)",
       "Bash(git:*)",
