@@ -1,5 +1,3 @@
-@FRAMEWORK.md
-
 # Base Instructions
 
 @context/BASE.md
@@ -15,3 +13,7 @@
 # Tools
 
 @context/tools/TOOLS.md
+
+# Framework
+
+@FRAMEWORK.md

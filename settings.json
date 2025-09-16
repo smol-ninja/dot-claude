@@ -42,6 +42,10 @@
           {
             "type": "command",
             "command": "~/.claude/hooks/ccnotify/ccnotify.py UserPromptSubmit"
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/UserPromptSubmit/append-subagents.py"
           }
         ]
       }
@@ -58,6 +62,7 @@
       "Bash(cd:*)",
       "Bash(cp:*)",
       "Bash(curl:*)",
+      "Bash(cut:*)",
       "Bash(echo:*)",
       "Bash(eza:*)",
       "Bash(find:*)",
@@ -80,6 +85,7 @@
       "Bash(nr:*)",
       "Bash(nun:*)",
       "Bash(pnpm:*)",
+      "Bash(qsv:*)",
       "Bash(rg:*)",
       "Bash(tail:*)",
       "Bash(timeout:*)",
@@ -93,16 +99,13 @@
       "TodoWrite",
       "WebFetch",
       "WebSearch",
-      "mcp__container-use",
       "mcp__context7",
-      "mcp__filesystem",
       "mcp__github",
       "mcp__magic",
       "mcp__morphllm-fast-apply",
       "mcp__playwright",
       "mcp__sequential-thinking",
-      "mcp__serena",
-      "mcp__solana-mcp-server"
+      "mcp__serena"
     ],
     "deny": [
       "Bash(> /dev/sda*)",
