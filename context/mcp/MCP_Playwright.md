@@ -24,6 +24,28 @@
 - **Sequential**: Sequential plans test strategy → Playwright executes browser automation
 - **Magic**: Magic creates UI components → Playwright validates accessibility and behavior
 
+#### How to Use
+
+You may encounter a situation where the development port (e.g. 3000) is already in use because the user has manually
+started the development server.
+
+##### ❌ DO NOT:
+
+- Attempt to kill the existing process
+- Try to start a new server on a different port
+- Stop or restart the development server
+
+##### ✅ DO:
+
+- Proceed directly with Playwright testing
+- Navigate to `http://localhost:3000` (or whatever port the development server is running on) without starting any
+  server
+
+##### Rationale
+
+The user may have intentionally started the development server themselves for debugging or monitoring purposes.
+Attempting to manage the server lifecycle can interfere with their workflow.
+
 #### Examples
 
 ```

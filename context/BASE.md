@@ -4,4 +4,6 @@
 
 @MODERN_CLI.md
 
+@REPORTS.md
+
 @SENIOR_PROGRAMMER.md
