@@ -1,5 +1,0 @@
-@SHELL.md
-
-@TYPESCRIPT.md
-
-@TYPESCRIPT_REACT.md

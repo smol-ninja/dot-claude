@@ -1,4 +1,4 @@
-### Shell
+## Modern CLI
 
 Use these modern CLI tools in shell like Bash or Zsh.
 
