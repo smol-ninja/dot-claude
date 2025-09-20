@@ -45,7 +45,7 @@ Exception: project already uses ESLint and Prettier.
 
 Use the `dayjs` library for date calculations. Avoid using the native JavaScript Date object.
 
-Example:
+**Example:**
 
 ```typescript
 import dayjs from "dayjs";
@@ -60,7 +60,7 @@ const tomorrow = now.add(1, "day");
 
 Never use the double negation (`!!`) operator. Instead, use the `Boolean` constructor.
 
-Example:
+**Example:**
 
 ```typescript
 const x = !!y; // bad
@@ -68,6 +68,32 @@ const x = Boolean(y); // good
 ```
 
 Never use the `any` type.
+
+#### No return value in `forEach` callbacks
+
+Never return a value from a `forEach` callback.
+
+**Example:**
+
+```typescript
+[].forEach(() => {
+  return 1; // bad
+});
+
+[].forEach(() => {
+  // good
+});
+```
+
+**Another example:**
+
+```typescript
+[].forEach((item) => console.log(item)); // bad
+
+[].forEach((item) => {
+  console.log(item); // good
+});
+```
 
 #### Prefer TypeScript over JavaScript
 
@@ -79,4 +105,15 @@ Use `type` instead of `interface` for declaring types.
 
 #### Typechecking
 
-Run `just tsc-check` (if a `justfile` is available) or `nlx tsc --noEmit` to type check the code.
+Run `just tsc-check` (if a `justfile` is available) or `na tsc --noEmit` to type check the code.
+
+#### Use `Number.isNaN` instead of `isNaN`
+
+Use `Number.isNaN` instead of `isNaN`.
+
+**Example:**
+
+```typescript
+const x = Number.isNaN(y); // good
+const x = isNaN(y); // bad
+```
