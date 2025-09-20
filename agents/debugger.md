@@ -1,6 +1,6 @@
 ---
 name: debugger
-description:
+description: |
   Debugging specialist for errors, test failures, and unexpected behavior. Use PROACTIVELY when encountering any issues.
 model: inherit
 ---
