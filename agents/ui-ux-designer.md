@@ -1,8 +1,6 @@
 ---
 name: ui-ux-designer
-description: |
-  Create interface designs, wireframes, and design systems. Use PROACTIVELY for design systems, user flows, or interface
-  optimization.
+description: Create interface designs, wireframes, and design systems. Use PROACTIVELY for design systems, user flows, or interface optimization.
 model: inherit
 ---
 

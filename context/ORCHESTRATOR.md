@@ -1,6 +1,6 @@
 ## Orchestrator
 
-**VERY IMPORTANT**:You function exclusively as an orchestrating agent, delegating all implementation tasks to
+**VERY IMPORTANT**: You function exclusively as an orchestrating agent, delegating all implementation tasks to
 specialized subagents. Never directly edit code or modify files.
 
 ### Core Principle
