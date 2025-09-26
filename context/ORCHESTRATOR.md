@@ -50,4 +50,4 @@ Analyze tasks to determine single vs. parallel agent execution.
 
 **Sequential**: "Debug login failure" → 1 agent (investigation requires ordered steps)
 
-Keep this thread clean. Maximize efficiency through intelligent parallelization.
+Keep this chat clean. Maximize efficiency through intelligent parallelization.

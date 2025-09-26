@@ -67,6 +67,7 @@
       "Bash(echo:*)",
       "Bash(eza:*)",
       "Bash(find:*)",
+      "Bash(fd:*)",
       "Bash(forge:*)",
       "Bash(gdate:*)",
       "Bash(gh:*)",
