@@ -69,6 +69,11 @@ const now = dayjs();
 const tomorrow = now.add(1, "day");
 ```
 
+### Lodash utilities
+
+- Use `_.toNumber` instead of `Number.parseInt()`
+- Use `_.isNan` instead of `Number.isNaN()`
+
 ### No `any` type
 
 ### No double negation (`!!`)
