@@ -31,21 +31,21 @@ def main() -> None:
 
 
 def ends_with_s_flag(transcript_path: str) -> bool:
-    """Check if the last user message in the transcript ends with '-s'."""
+    """Check if the last message in the transcript is a user message ending with '-s'."""
     try:
         with open(transcript_path, "r") as f:
-            last_user_message = None
+            last_line = None
             for line in f:
-                data = json.loads(line.strip())
+                last_line = line.strip()
+
+            if last_line:
+                data = json.loads(last_line)
                 if data.get("type") == "user" and "message" in data:
                     content = data["message"].get("content", "")
                     # Only process string content (actual user messages)
                     # Skip list content (tool results)
                     if isinstance(content, str):
-                        last_user_message = content
-
-            if last_user_message:
-                return last_user_message.rstrip().endswith("-s")
+                        return content.rstrip().endswith("-s")
     except (FileNotFoundError, json.JSONDecodeError, KeyError):
         pass
 
