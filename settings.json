@@ -1,58 +1,9 @@
 {
-  "includeCoAuthoredBy": false,
-  "model": "opusplan",
   "env": {
     "CLAUDE_CODE_ENABLE_TELEMETRY": "0"
   },
-  "hooks": {
-    "Notification": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/ccnotify/ccnotify.py Notification"
-          }
-        ]
-      }
-    ],
-    "PreToolUse": [
-      {
-        "matcher": "Read",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude-code-docs/claude-docs-helper.sh hook-check"
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/ccnotify/ccnotify.py Stop"
-          }
-        ]
-      }
-    ],
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/ccnotify/ccnotify.py UserPromptSubmit"
-          },
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/UserPromptSubmit/append-subagents.py"
-          }
-        ]
-      }
-    ]
-  },
+  "includeCoAuthoredBy": false,
   "permissions": {
-    "defaultMode": "plan",
     "allow": [
       "Bash(~/.claude-code-docs/claude-docs-helper.sh:*)",
       "Bash(awk:*)",
@@ -141,11 +92,59 @@
       "Bash(usermod:*)",
       "Read(./.env)",
       "Read(./.env.production)"
+    ],
+    "defaultMode": "plan"
+  },
+  "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/ccnotify/ccnotify.py Notification"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude-code-docs/claude-docs-helper.sh hook-check"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/ccnotify/ccnotify.py Stop"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/ccnotify/ccnotify.py UserPromptSubmit"
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/UserPromptSubmit/append-subagents.py"
+          }
+        ]
+      }
     ]
   },
   "statusLine": {
+    "type": "command",
     "command": "bunx -y ccstatusline@latest",
-    "padding": 0,
-    "type": "command"
+    "padding": 0
   }
 }
