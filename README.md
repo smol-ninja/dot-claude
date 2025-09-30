@@ -31,45 +31,32 @@ Each context module is composable via `@` references, creating layered behaviora
 
 ## Commands
 
-Framework-based command system with inheritance hierarchy:
+Streamlined command system focused on semantic analysis and programmatic workflows:
 
 ```
 commands/
-├── cy/           # Will Cygan's commands
-├── ho/           # Seth Hobson's commands
-├── sc/           # SuperClaude framework commands (core workflows)
-└── prb/          # Personal custom commands
-    ├── bump-release.md    # Version management
-    ├── create-command.md  # Command scaffolding
-    ├── create-issue.md    # GitHub issue templates
-    ├── create-worktrees.md # Git workflow setup
-    └── docs.md           # Documentation helpers
+├── bump-release.md    # Automated version management and releases
+├── commit.md          # Semantic commit generation with --short flag
+├── create-command.md  # Command scaffolding utilities
+├── create-issue.md    # GitHub issue creation with auto-labeling
+├── create-pr.md       # Semantic PR generation with smart defaults
+├── create-worktrees.md # Git worktree workflow automation
+└── docs.md           # Documentation generation helpers
 ```
 
-**Usage**: Commands inherit from active framework (currently `sc` → SuperClaude). **Custom**: Personal commands in
-`prb/` override framework defaults.
+**Key Features**:
+- **commit**: Analyzes staged changes semantically, generates conventional commit messages. Supports `--short` for single-line commits and natural argument parsing (`/commit fix auth bug`)
+- **create-pr**: Reads actual code changes to understand purpose, auto-detects issues/reviewers, updates existing PRs instead of creating duplicates
 
-## Frameworks
+## Architecture
 
-**Active Framework**: SuperClaude (`sc`) - Advanced software engineering patterns and behavioral modes.
+Commands are designed for autonomous execution with minimal user intervention:
 
-```
-frameworks/sc/
-├── CLAUDE.md               # Framework entry point
-├── FLAGS.md                # Feature flags and toggles
-├── PRINCIPLES.md           # Core engineering principles
-├── RULES.md                # Coding standards and conventions
-├── agents/                 # Specialized agent configurations
-├── commands/               # Framework-specific workflows
-└── modes/                  # Behavioral operation modes
-    ├── MODE_Brainstorming.md    # Creative ideation mode
-    ├── MODE_Introspection.md    # Self-analysis mode
-    ├── MODE_Orchestration.md    # Multi-agent coordination
-    ├── MODE_Task_Management.md  # Structured task execution
-    └── MODE_Token_Efficiency.md # Context optimization
-```
-
-See [SuperClaude](https://github.com/SuperClaude-Org/SuperClaude_Framework) for more details.
+- **Semantic analysis**: Commands read actual code changes to understand intent, not just filenames
+- **Natural argument parsing**: Flexible interpretation of flags and parameters (e.g., `/commit fix auth --short`)
+- **Smart defaults**: Auto-detect reviewers from CODEOWNERS, stage changes automatically, update existing PRs
+- **Programmatic workflows**: Stateless execution without complex session tracking or interactive prompts
+- **Conventional commits**: Automatic type/scope detection following [conventionalcommits.org](https://conventionalcommits.org)
 
 ### MCP Servers
 
