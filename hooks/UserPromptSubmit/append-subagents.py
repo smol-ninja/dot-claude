@@ -15,9 +15,7 @@ def main() -> None:
     if prompt.rstrip().endswith("-s"):
         # Get the path to ORCHESTRATOR.md relative to this script
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        orchestrator_path = os.path.join(
-            script_dir, "..", "..", "context", "ORCHESTRATOR.md"
-        )
+        orchestrator_path = os.path.join(script_dir, "ORCHESTRATOR.md")
 
         # Read the content from ORCHESTRATOR.md
         with open(orchestrator_path, "r") as f:
