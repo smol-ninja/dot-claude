@@ -1,4 +1,5 @@
 ---
+argument-hint: [--short] [--push]
 description: Create a git commit with semantic analysis
 ---
 
