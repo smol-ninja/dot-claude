@@ -1,251 +1,133 @@
 ---
-description: Create a GitHub pull request with intelligent analysis and programmatic workflow
+description: Create a GitHub pull request with semantic change analysis
 ---
 
 ## Context
 
-- Session ID: !`gdate +%s%N`
 - Current branch: !`git branch --show-current || echo "unknown"`
-- Git status: !`git status --porcelain | wc -l | tr -d ' ' || echo "0"` uncommitted changes
 - Remote status: !`git status -b --porcelain | head -1 || echo "No remote tracking"`
 - Recent commits: !`git log --oneline -5 || echo "No commits found"`
-- GitHub CLI auth: !`gh auth status | rg -q "Logged in" && echo "authenticated" || echo "not authenticated"`
-- Existing PR: !`gh pr list --head $(git branch --show-current || echo "main") --json number,state | jq -r '.[0].number // "none"' || echo "none"`
+- GitHub CLI auth: !`gh auth status 2>&1 | rg -q "Logged in" && echo "authenticated" || echo "not authenticated"`
+- Existing PR: !`gh pr list --head $(git branch --show-current 2>/dev/null || echo "main") --json number,url --jq '.[0] | "\(.number)|\(.url)"' 2>/dev/null || echo "none"`
 - Arguments: $ARGUMENTS
 
 ## Your Task
 
-### STEP 1: Initialize PR creation session and validate prerequisites
+### STEP 1: Validate prerequisites
 
-- CREATE session state: `/tmp/pr-create-$SESSION_ID.json`
-- VALIDATE session ID generation and file permissions
-- SET initial state:
-  ```json
-  {
-    "sessionId": "$SESSION_ID",
-    "timestamp": "$(gdate -Iseconds || date -Iseconds)",
-    "branch": "$(git branch --show-current)",
-    "arguments": "$ARGUMENTS",
-    "phase": "validation",
-    "pr_config": {},
-    "validation_results": {}
-  }
+CHECK GitHub authentication:
+- IF Context shows "not authenticated": ERROR and exit with: "Run `gh auth login` first"
+
+CHECK git repository state:
+- Run `git remote get-url origin` to confirm remote exists
+- Run `git rev-parse --show-toplevel` to confirm we're in a repo
+- IF either fails: ERROR and exit with specific issue
+
+UPDATE remote state:
+- Run `git fetch origin` silently
+
+CHECK commits to PR:
+- Get base branch: `git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@' 2>/dev/null || echo "main"`
+- Count commits ahead: `git rev-list --count origin/$base_branch..HEAD 2>/dev/null`
+- IF 0 commits ahead: ERROR "No commits to create PR from"
+
+### STEP 2: Parse arguments naturally
+
+Interpret $ARGUMENTS as natural language:
+- "draft" anywhere → draft mode
+- "to X" or "base=X" → target branch X (default: main)
+- "review by X" or "reviewers=X" → add reviewer(s) X
+- Quoted text → custom title
+- Everything else → additional context for description
+
+Examples:
+
+- `/create-pr draft` - Create draft PR
+- `/create-pr to staging` - Target staging branch
+- `/create-pr review by alice` - Add alice as reviewer
+- `/create-pr "Add user analytics dashboard"` - Custom title
+- `/create-pr draft to develop review by bob` - Combined options
+
+### STEP 3: Semantic change analysis
+
+READ the actual changes:
+- Run `git diff origin/$base_branch...HEAD` to get full diff
+- Run `git diff --stat origin/$base_branch...HEAD` for summary
+- Run `git log --pretty=format:"%s%n%b" origin/$base_branch...HEAD` for commit messages
+
+ANALYZE semantically what's changing:
+- What files are affected? What are their purposes?
+- Are these bug fixes, features, refactors, or maintenance?
+- What's the core purpose of these changes?
+- Any breaking changes, migrations, or API changes?
+- Read the actual code changes to understand intent
+
+GENERATE PR content intelligently:
+- **Title**: Concise summary of the primary change (not just "Update files")
+  - Use conventional commit format if changes fit a clear type
+  - Example: "feat: add webhook retry mechanism" or "fix: prevent race condition in auth flow"
+  - If custom title provided in args, use that instead
+
+- **Description**: 2-4 short paragraphs maximum:
+  1. What changed and why
+  2. Key implementation details worth noting
+  3. Testing/validation approach if relevant
+  4. Any follow-up work or considerations
+
+DETECT issue references:
+- Extract issue numbers from branch name: `$(git branch --show-current | rg -o '#?\d+' || echo "")`
+- Extract from commit messages
+- Format as "Closes #123" if fix, "Related to #123" if reference only
+
+IDENTIFY reviewers intelligently:
+- Check for CODEOWNERS file: `git ls-files | rg CODEOWNERS`
+- If exists, extract owners for changed files
+- Otherwise use git blame to find frequent contributors to changed files
+- Combine with any reviewers specified in arguments
+
+### STEP 4: Handle existing PR
+
+IF existing PR found in Context (not "none"):
+- PARSE the number and URL
+- LOG: "PR #X already exists: URL"
+- UPDATE existing PR instead of creating new one:
+  ```bash
+  gh pr edit $PR_NUMBER \
+    --title "$generated_title" \
+    --body "$generated_body"
   ```
+- EXIT with success message
 
-TRY:
+### STEP 5: Create new PR
 
-- VALIDATE GitHub authentication from Context
-- VALIDATE git repository presence
-- VALIDATE branch state and remote tracking
-- SAVE validation results to session state
-
-**Validation Logic:**
-
-IF GitHub auth != "authenticated":
-
-- ERROR: "GitHub authentication required. Please run `gh auth login`."
-- EXIT with error code
-
-IF git repository not detected:
-
-- ERROR: "Not in a git repository. Navigate to project root or run `git init`."
-- EXIT with error code
-
-IF uncommitted changes > 0:
-
-- ERROR: "Uncommitted changes detected. Commit or stash changes before creating PR."
-- EXIT with error code
-
-CATCH (validation_failed):
-
-- LOG specific validation failure to session state
-- PROVIDE specific remediation instructions
-- SAVE partial session state for recovery
-- EXIT with helpful error message
-
-### STEP 2: Parse arguments and configure PR parameters
-
-- PARSE $ARGUMENTS for PR configuration options
-- SET default values for missing parameters
-- VALIDATE parameter combinations
-- UPDATE session state with PR configuration
-
-**Argument Processing:**
-
+ENSURE branch is pushed:
 ```bash
-# Parse common argument patterns
-draft_mode=$(echo "$ARGUMENTS" | rg -q "draft" && echo "true" || echo "false")
-base_branch=$(echo "$ARGUMENTS" | rg -oE 'base=([^\s]+)' | cut -d'=' -f2 || echo "main")
-reviewers=$(echo "$ARGUMENTS" | rg -oE 'reviewers=([^\s]+)' | cut -d'=' -f2 || echo "")
-custom_title=$(echo "$ARGUMENTS" | rg -oE 'title="([^"]+)"' | sed 's/title="//;s/"$//' || echo "")
+git push -u origin $(git branch --show-current) 2>&1 || echo "Already pushed"
 ```
 
-### STEP 3: Intelligent change analysis and PR content generation
-
-Think deeply about the optimal PR content generation strategy based on commit history, file changes, and project conventions.
-
-TRY:
-
-- ANALYZE commit history for conventional commit patterns
-- EXAMINE file changes for scope and impact
-- GENERATE intelligent PR title and description
-- DETECT related issues from branch name or commits
-- IDENTIFY appropriate reviewers from CODEOWNERS or git history
-- SAVE analysis results to session state
-
-**Change Analysis Execution:**
-
+BUILD pr creation command:
 ```bash
-# Get base and current branch
-base_branch=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@' || echo "main")
-current_branch=$(git branch --show-current)
-
-# Analyze commits and changes
-commit_messages=$(git log --pretty=format:"%s" origin/$base_branch...HEAD || echo "")
-file_changes=$(git diff --name-status origin/$base_branch...HEAD || echo "")
-change_summary=$(git diff --stat origin/$base_branch...HEAD || echo "")
-
-# Extract issue numbers from branch or commits
-issue_numbers=$(echo "$current_branch\n$commit_messages" | rg -oE '#[0-9]+' | sort -u || echo "")
-
-# Check for existing PR
-existing_pr=$(gh pr list --head $current_branch --json number,state | jq -r '.[0].number // "none"' || echo "none")
-```
-
-**Title Generation Logic:**
-
-IF custom_title provided:
-
-- USE custom_title as PR title
-
-ELSE IF single commit with conventional format:
-
-- EXTRACT title from commit message
-- VALIDATE conventional commit format
-
-ELSE:
-
-- ANALYZE file changes for primary scope
-- GENERATE title based on change patterns
-- FORMAT: "type(scope): description"
-
-CATCH (analysis_failed):
-
-- LOG analysis failure details
-- FALLBACK to generic title generation
-- CONTINUE with available information
-
-### STEP 4: Handle existing PR or create new PR
-
-IF existing_pr != "none":
-
-- LOG: "PR #$existing_pr already exists for this branch"
-- PROMPT: "Update existing PR or create new one? (update/new/cancel)"
-- CASE user_choice:
-  - "update": EXECUTE PR update workflow
-  - "new": CONTINUE with new PR creation
-  - "cancel": EXIT gracefully
-
-ELSE:
-
-- PROCEED with new PR creation
-
-### STEP 5: Execute PR creation with intelligent content
-
-- ENSURE branch is pushed to remote
-- GENERATE PR body intelligently; keep it short and concise
-- COLLECT all PR parameters (title, body, reviewers, etc.)
-- EXECUTE `gh pr create` with generated content
-- SAVE PR details to session state
-
-**PR Creation Execution:**
-
-```bash
-# Ensure branch is pushed
-git push -u origin $(git branch --show-current) || echo "Branch already pushed"
-
-# Build PR creation command
 gh pr create \
   --title "$generated_title" \
-  --body "$(cat <<'EOF'
-## Summary
-
-$generated_summary
-
-## Related Issues
-
-$issue_links
-EOF
-)" \
-  $(test "$draft_mode" = "true" && echo "--draft" || echo "") \
-  $(test -n "$reviewers" && echo "--reviewer $reviewers" || echo "") \
-  --base "$base_branch"
+  --body "$generated_body" \
+  --base "$base_branch" \
+  $(test "$draft_mode" = "true" && echo "--draft") \
+  $(test -n "$reviewers" && echo "--reviewer $reviewers")
 ```
 
-TRY:
+EXECUTE and capture output:
+- Extract PR URL from command output
+- Display: "✓ Created PR: $PR_URL"
 
-- EXECUTE PR creation command with all parameters
-- CAPTURE PR URL and number from output
-- VALIDATE PR creation success
-- UPDATE session state with PR details
+IF command fails:
+- Check specific error (auth, branch protection, validation)
+- Provide specific fix for that error
+- DO NOT retry automatically
 
-CATCH (pr_creation_failed):
+## Notes
 
-- LOG specific failure reason (auth, network, validation, etc.)
-- PROVIDE targeted remediation steps
-- SAVE session state with failure details
-- OFFER retry with corrected parameters
-
-### STEP 6: Post-creation workflow and cleanup
-
-- DISPLAY PR creation success message with URL
-- SAVE final session state with completion status
-- OPTIONALLY trigger CI/CD workflows if detected
-- CLEAN UP temporary session files
-
-## Advanced Features Integration
-
-### Issue Linking:
-
-FOR EACH issue number detected:
-
-- VALIDATE issue exists with `gh issue view`
-- ADD appropriate linking keywords ("Closes #123", "Related to #456")
-- INCLUDE issue context in PR description
-
-### CI/CD Integration:
-
-IF test files or deployment configs changed:
-
-- ADD CI trigger comments to PR body
-- SUGGEST appropriate test commands
-- INCLUDE deployment preview requests
-
-FINALLY:
-
-- ARCHIVE session data: `/tmp/pr-create-archive-$SESSION_ID.json`
-- REPORT completion status with metrics
-- CLEAN UP temporary files (EXCEPT archived data)
-- LOG session completion timestamp
-
-## Usage Examples
-
-- `/create-pr` - Create PR with intelligent defaults
-- `/create-pr base=staging` - Target different base branch
-- `/create-pr draft` - Create draft PR for work in progress
-- `/create-pr reviewers=alice,bob` - Add specific reviewers
-- `/create-pr title="Custom PR title"` - Override generated title
-
-## Error Recovery
-
-- **Branch not pushed**: Automatically pushes with tracking
-- **Existing PR detected**: Offers update or new PR options
-- **Network issues**: Provides retry with exponential backoff
-- **Validation errors**: Specific remediation for each error type
-
-## State Management
-
-- Session state tracks progress through each step
-- Resumable from last successful checkpoint
-- Automatic cleanup of stale session files
-- Comprehensive error logging for debugging
+- Automatically updates existing PRs instead of creating duplicates
+- Reads actual code changes to understand purpose, not just filenames
+- Generates concise, meaningful descriptions
+- Handles common errors with specific remediation steps
+- No interactive prompts - makes intelligent defaults
