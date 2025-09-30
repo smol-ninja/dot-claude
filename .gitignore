@@ -1,5 +1,6 @@
 # misc directories
 backups/
+file-history/
 ide/
 logs/
 projects/
@@ -9,6 +10,7 @@ todos/
 
 # misc files
 .claude.json
+history.jsonl
 
 # hooks
 hooks/ccnotify/ccnotify.db

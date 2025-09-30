@@ -1,21 +1,18 @@
 ---
-allowed-tools: Bash(gdate:*), Bash(git add:*), Bash(git log:*), Bash(git commit:*), Bash(git branch:*), Bash(git diff:*), Bash(git status:*), Bash(git rev-parse:*)
 description: Create a git commit
 ---
 
 ## Context
 
-- Session ID: !`gdate +%s%N`
 - Current git status: !`git status`
 - Current git diff (staged and unstaged changes): !`git diff HEAD`
 - Current branch: !`git branch --show-current`
-- Recent commits: !`git log --oneline -10`
 
 ## Your task
 
-Generate a conventional commit message following https://conventionalcommits.org/en/v1.0.0/ specification and create the commit automatically.
+Generate a conventional commit message following https://conventionalcommits.org specification and create the commit automatically.
 
-STEP 1: Analyze current git state and changes
+### STEP 1: Analyze current git state and changes
 
 - EXAMINE output from Context section for current status
 - DETERMINE if there are staged changes ready for commit
@@ -24,7 +21,7 @@ STEP 1: Analyze current git state and changes
   - STAGE appropriate files using `git add`
 - VALIDATE that commit is appropriate (not empty, not work-in-progress)
 
-STEP 2: Determine conventional commit type and scope
+### STEP 2: Determine conventional commit type and scope
 
 - ANALYZE the nature of changes from git diff output
 - CATEGORIZE changes using conventional commit types:
@@ -43,7 +40,7 @@ STEP 2: Determine conventional commit type and scope
   - Component, module, or functional area affected
   - Examples: `auth`, `api`, `ui`, `core`, `config`
 
-STEP 3: Compose conventional commit message
+### STEP 3: Compose conventional commit message
 
 - WRITE concise subject line (≤50 characters):
   - Format: `type(scope): description`
@@ -60,7 +57,7 @@ STEP 3: Compose conventional commit message
   - ADD footer: `BREAKING CHANGE: description`
   - EXPLAIN the impact and migration path
 
-STEP 4: Create the commit
+### STEP 4: Create the commit
 
 TRY:
 
@@ -74,13 +71,13 @@ CATCH (commit_failed):
 - PROVIDE guidance on resolution
 - SUGGEST alternative approaches
 
-STEP 5: Validate commit result
+### STEP 5: Validate commit result
 
 - CONFIRM commit was created successfully
 - DISPLAY commit hash and message
 - PROVIDE summary of what was committed
 
-Example formats:
+## Examples
 
 - `feat(auth): add OAuth2 login support`
 - `fix(api): resolve null pointer in user endpoint`
