@@ -30,15 +30,18 @@ IF staged changes exist:
 
 Interpret $ARGUMENTS for commit hints and flags:
 - `--short` flag → single-line commit only (no body)
+- `--push` flag → push to remote after committing
 - Commit type keywords (`feat`, `fix`, `docs`, etc.) → use that type
 - Quoted text → use as commit description
 - Everything else → context for understanding intent
 
 Examples:
 - `/commit --short` → single-line commit
+- `/commit --push` → commit and push to remote
+- `/commit --short --push` → single-line commit and push
 - `/commit fix auth bug` → type:fix, scope:auth
 - `/commit "add webhook support"` → use as description
-- `/commit docs --short` → single-line docs commit
+- `/commit docs --short --push` → single-line docs commit and push
 
 ### STEP 3: Semantic change analysis
 
@@ -106,6 +109,15 @@ DISPLAY result:
 IF commit fails:
 - Show the actual error
 - Suggest specific fix based on error type
+
+### STEP 6: Push to remote (if --push flag present)
+
+IF `--push` flag was set:
+- EXECUTE: `git push origin`
+- DISPLAY result showing branch pushed
+- IF push fails:
+  - Show the actual error
+  - Suggest specific fix (e.g., pull first, set upstream, auth issues)
 
 ## Examples
 

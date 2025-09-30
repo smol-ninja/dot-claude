@@ -2,73 +2,54 @@
 
 PRB's `.claude` directory.
 
+## Settings
+
+[settings.json](settings.json#L1) configures permissions, hooks, and environment:
+
+- **Permissions**:
+  - Pre-approved commands (e.g. `git`, `grep`, etc.) and tools (MCP servers, file ops) run without confirmation.
+  - Destructive operations (`sudo`, `rm -rf`, system files) are blocked.
+- **Hooks**: Event-driven automation, see the [docs](https://docs.claude.com/en/docs/claude-code/hooks) for more info.
+- **Status Line**: Custom status via `ccstatusline`
+
 ## Context
 
-Modular configuration system for Claude Code with structured context inheritance:
+Modular configuration system using `@` syntax for composable behavioral instructions:
 
-```
-context/
-├── BASE.md                 # Core behavioral instructions
-├── CRITICAL_THINKING.md    # Analytical approach guidelines
-├── DELEGATION.md           # Task orchestration patterns
-├── REPORTS.md              # Output formatting standards
-├── SENIOR_PROGRAMMER.md    # Expert-level coding approach
-├── languages/
-│   ├── SHELL.md            # Shell and CLI tool preferences
-│   ├── TYPESCRIPT.md       # TypeScript conventions
-│   └── TYPESCRIPT_REACT.md # React-specific patterns
-├── mcp/                    # MCP server integration guides
-│   ├── MCP_Context7.md     # Documentation lookup patterns
-│   ├── MCP_Magic.md        # UI component generation
-│   ├── MCP_Serena.md       # Semantic code operations
-│   └── ...                 # Additional MCP configs
-└── tools/
-    ├── JUST.md             # Command runner preferences
-    └── NODE.md             # Node.js ecosystem setup
+```markdown
+# Example: BASE.md
+@CRITICAL_THINKING.md
+@SENIOR_PROGRAMMER.md
+@tools/JUST.md
 ```
 
-Each context module is composable via `@` references, creating layered behavioral instructions.
+Context files are organized by concern (languages, tools, MCP servers) and imported via `@filename.md` references. Base instructions cascade through specialized modules, creating layered behavioral policies without duplication.
 
 ## Commands
 
-Streamlined command system focused on semantic analysis and programmatic workflows:
+Custom slash commands in `commands/*.md` for Git workflows, project automation, and code generation.
 
-```
-commands/
-├── bump-release.md    # Automated version management and releases
-├── commit.md          # Semantic commit generation with --short flag
-├── create-command.md  # Command scaffolding utilities
-├── create-issue.md    # GitHub issue creation with auto-labeling
-├── create-pr.md       # Semantic PR generation with smart defaults
-├── create-worktrees.md # Git worktree workflow automation
-└── docs.md           # Documentation generation helpers
-```
+Commands use semantic analysis to understand code changes rather than relying on filenames. They feature natural argument parsing (`/commit fix auth --short`), smart defaults (auto-stage changes, detect reviewers), and stateless execution without interactive prompts.
 
-**Key Features**:
-- **commit**: Analyzes staged changes semantically, generates conventional commit messages. Supports `--short` for single-line commits and natural argument parsing (`/commit fix auth bug`)
-- **create-pr**: Reads actual code changes to understand purpose, auto-detects issues/reviewers, updates existing PRs instead of creating duplicates
+## Hooks
 
-## Architecture
+Custom hooks in `hooks/` extend Claude Code with event-driven automation.
 
-Commands are designed for autonomous execution with minimal user intervention:
+### append-subagents.py
 
-- **Semantic analysis**: Commands read actual code changes to understand intent, not just filenames
-- **Natural argument parsing**: Flexible interpretation of flags and parameters (e.g., `/commit fix auth --short`)
-- **Smart defaults**: Auto-detect reviewers from CODEOWNERS, stage changes automatically, update existing PRs
-- **Programmatic workflows**: Stateless execution without complex session tracking or interactive prompts
-- **Conventional commits**: Automatic type/scope detection following [conventionalcommits.org](https://conventionalcommits.org)
+The most critical hook. Appends orchestration instructions when prompts end with `-s` flag, forcing Claude to delegate work to specialized subagents instead of doing everything itself.
 
-### MCP Servers
+**Why**: Claude often tries to handle complex tasks directly instead of spawning parallel agents. This hook guarantees orchestration mode by injecting [ORCHESTRATOR.md](hooks/UserPromptSubmit/ORCHESTRATOR.md) which mandates:
+- Parallel delegation when possible (independent subtasks)
+- Single agent for sequential work
+- No direct implementation by orchestrator
 
-- [ContainerUse](https://container-use.com): Sandboxed development environment
-- [Context7](https://github.com/oraios/context7): Curated documentation lookup and pattern guidance
-- [Serena](https://github.com/oraios/serena): Semantic code understanding with project memory and session persistence
-- [Magic](https://github.com/oraios/magic): Modern UI generation from [21st.dev](https://21st.dev) patterns
-- [Morphllm](https://github.com/oraios/morphllm): Optimized pattern-based code editing engine transformations
-- [Playwright](https://github.com/oraios/playwright): Real browser automation and testing
-- [Sequential](https://github.com/oraios/sequential): Structured multi-step reasoning and hypothesis testing
+**Usage**: `Add user analytics dashboard -s` → spawns frontend/backend/database agents in parallel
 
-### Nice to Have
+Other hooks handle notifications (`ccnotify`) and documentation helpers.
+
+
+### Nice-to-Have Utilities
 
 Some nice-to-have utilities:
 
