@@ -31,8 +31,31 @@ EXTRACT repository from $ARGUMENTS:
 
 EXTRACT from remaining $ARGUMENTS:
 - **Issue Title**: Create a clear, concise title (5-10 words) that summarizes the main issue
-- **Issue Body**: If description is detailed, create structured body with context
-- If description is brief, use it as both title and body
+- **Issue Body**: Use the structured template format (see Template Format below)
+- If description is brief, use it as both title and expand it in the Problem section
+
+**Template Format:**
+```
+## Files Affected
+
+https://github.com/owner/repo/blob/main/path/to/file.ext
+
+## Problem
+
+[Description of the issue, extracted from user's natural language description]
+
+## Solution
+
+[Proposed solution if clear from description, otherwise: "TBD - requires investigation"]
+```
+
+**Notes on template usage:**
+- **Files Affected**: Generate GitHub URLs for any files mentioned in description
+  - Use format: `https://github.com/{owner}/{repo}/blob/main/{path}`
+  - If no specific files mentioned, use repository root or mark as "TBD"
+  - List multiple files if applicable (one per line)
+- **Problem**: Extract and elaborate on the issue from user's description
+- **Solution**: Include if user provided one, otherwise use "TBD" or similar placeholder
 
 ### STEP 4: Analyze and determine labels
 
@@ -129,19 +152,27 @@ DISPLAY result showing:
 
 ```bash
 # Current repository
-/create-issue this "Bug in auth flow causing token expiration errors"
+/create-issue this "Bug in auth flow causing token expiration errors in src/auth/token.ts"
+# Creates issue with Files Affected section pointing to token.ts
 
 # Specific repository
 /create-issue "PaulRBerg/dotfiles" "Add zsh configuration for tmux startup"
+# Solution: TBD (configuration details needed)
 
 # Command-center with scope detection
-/create-issue "sablier-labs/command-center" "Implement dark mode toggle for frontend dashboard"
+/create-issue "sablier-labs/command-center" "Implement dark mode toggle for frontend dashboard components"
+# Files Affected: frontend components
+# Solution: Add theme context and CSS variables
 
 # Documentation fix
-/create-issue this "Update README with new installation steps"
+/create-issue this "Update README with new installation steps for Docker setup"
+# Files Affected: README.md
+# Solution: Document docker-compose workflow
 
 # Performance issue
 /create-issue "company/api-service" "API endpoints responding slowly, need optimization"
+# Files Affected: TBD (profiling required)
+# Solution: TBD - requires performance analysis
 ```
 
 ## Notes
