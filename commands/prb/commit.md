@@ -12,7 +12,14 @@ description: Create a git commit
 
 Generate a conventional commit message following https://conventionalcommits.org specification and create the commit automatically.
 
-### STEP 1: Analyze current git state and changes
+### STEP 1: Check for flags
+
+- CHECK if `$ARGUMENTS` contains `--short` flag
+- IF `--short` flag is present:
+  - SET short_mode = true
+  - Commit message MUST be single-line only (no body, no footer)
+
+### STEP 2: Analyze current git state and changes
 
 - EXAMINE output from Context section for current status
 - DETERMINE if there are staged changes ready for commit
@@ -21,7 +28,7 @@ Generate a conventional commit message following https://conventionalcommits.org
   - STAGE appropriate files using `git add`
 - VALIDATE that commit is appropriate (not empty, not work-in-progress)
 
-### STEP 2: Determine conventional commit type and scope
+### STEP 3: Determine conventional commit type and scope
 
 - ANALYZE the nature of changes from git diff output
 - CATEGORIZE changes using conventional commit types:
@@ -40,7 +47,7 @@ Generate a conventional commit message following https://conventionalcommits.org
   - Component, module, or functional area affected
   - Examples: `auth`, `api`, `ui`, `core`, `config`
 
-### STEP 3: Compose conventional commit message
+### STEP 4: Compose conventional commit message
 
 - WRITE concise subject line (≤50 characters):
   - Format: `type(scope): description`
@@ -48,16 +55,20 @@ Generate a conventional commit message following https://conventionalcommits.org
   - Start with lowercase letter
   - No period at the end
 
-- IF change is complex:
+- IF short_mode is true:
+  - STOP HERE - use only the single-line subject
+  - DO NOT add body or footer
+
+- IF short_mode is false AND change is complex:
   - ADD detailed body (wrap at 72 characters)
   - EXPLAIN the "why" behind the change
   - SEPARATE body from subject with blank line
 
-- IF breaking change:
+- IF short_mode is false AND breaking change:
   - ADD footer: `BREAKING CHANGE: description`
   - EXPLAIN the impact and migration path
 
-### STEP 4: Create the commit
+### STEP 5: Create the commit
 
 TRY:
 
@@ -71,7 +82,7 @@ CATCH (commit_failed):
 - PROVIDE guidance on resolution
 - SUGGEST alternative approaches
 
-### STEP 5: Validate commit result
+### STEP 6: Validate commit result
 
 - CONFIRM commit was created successfully
 - DISPLAY commit hash and message
